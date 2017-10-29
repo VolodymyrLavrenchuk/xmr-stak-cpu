@@ -142,14 +142,18 @@ if(WIN32)
     set(LIBS ${LIBS} wsock32 ws2_32)
 endif()
 
+if(CMAKE_SYSTEM_NAME MATCHES "(SunOS|Solaris)")
+  set(LIBS ${LIBS} socket)
+endif()
+
 ################################################################################
 # Compile & Link
 ################################################################################
 
 # activate sse2 and aes-ni
 if(NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse2 -maes")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse2 -maes")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse2 -maes -m64")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse2 -maes -m64")
 endif()
 
 # activate static libgcc and libstdc++ linking
